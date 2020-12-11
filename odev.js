@@ -4,15 +4,14 @@
  */
 
 var person = {
-  name: "John",
-  message: function () {    
-    console.log("Hello, " + this.name)
+    name: "John",
+    message: function () {    
+      console.log("Hello, " + this.name)
+    }
   }
-}
-
-var messageFunc = person.message
-messageFunc();
-
+  
+  var messageFunc = person.message
+  messageFunc.call(person);
 
 /*  
   Odev 2:
@@ -23,17 +22,16 @@ messageFunc();
   sonuclarini yazdiracak sekilde duzenleyiniz.
 */
 var numbers = {
-  numbers: [[10,20,30], 2],
-  multiply: function(){
-    this.numbers[0].map(function(number, numberIndex){
-        const result = number * this.numbers[1];
-        console.log(result)
-    })
-  }
-};
-
-numbers.multiply();
-
+    numbers: [[10,20,30], 2],
+    multiply: function(){
+      this.numbers[0].map(function(number, numberIndex){
+          const result = number * this.numbers[1];
+          console.log(result)
+      }.bind(this))
+    }
+  };
+  
+  numbers.multiply();
 
 /* 
   Odev 3:
@@ -42,9 +40,24 @@ numbers.multiply();
   Ornek : isValidName("John") true donmeli
   Ornek : isValidName(" J ohn") false donmeli
 */
-function isValidName(name){
+function isValidName(name) {
+    
+  if (typeof name!='string') { return false; }
+      
+  if (name.length <=1) { return false; }
+      
+  if (!isNaN(name)) { return false; }
+      
+  var validname = name.trim().split(' ');
 
-}
+  for (var i = 0 ; i < validname.length; i++) {
+  if(validname[i].length === 1 ) 
+  {return false;}}
+  
+  return true;
+  
+  }
+
 
 /*
   Odev 4:
@@ -59,7 +72,18 @@ function isValidName(name){
   Ornek: katilimSaati("5", "30") 150 sonucunu vermelidir.
 */
 function katilimSaati(dersSayisi, dersSuresi){
+  
+  if (typeof dersSayisi==='boolean' || typeof dersSuresi==='boolean' || dersSayisi===null || dersSuresi===null)
+  {return false;}
+  
+  if (typeof dersSayisi==='undefined'|| typeof dersSuresi==='undefined'|| dersSayisi===('') || dersSuresi===('')) 
+  {return false;}
+  
+  let convert1=Number(dersSayisi);
+  let convert2=Number(dersSuresi);
+  
+  if (isNaN(convert1) || isNaN(convert2) || !isFinite(convert1) || !isFinite(convert2)) {return false;}
 
+  return convert1 * convert2 ; 
 }
-
 
